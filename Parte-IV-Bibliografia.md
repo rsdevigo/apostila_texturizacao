@@ -1,0 +1,48 @@
+# Parte IV — Bibliografia e Materiais Complementares
+
+Esta seção reúne, de forma consolidada, as referências que sustentam os quatro capítulos da Parte IV — texturas seamless e tileables (Capítulo 12), texturização procedural (Capítulo 13), pintura digital para jogos (Capítulo 14) e máscaras, stencils e decais (Capítulo 15). Como nas partes anteriores, ela separa o material de referência do projeto — a bibliografia oficial da disciplina — das fontes complementares externas incorporadas para atualizar, aprofundar e contextualizar os conceitos. As fontes complementares foram selecionadas por sua autoridade reconhecida na área (a documentação oficial das ferramentas de autoria e dos motores, os tratados de computação gráfica em tempo real, os recursos didáticos abertos consolidados e as apresentações técnicas de estúdios) e não substituem, mas ampliam, o material da disciplina.
+
+Cabe uma observação sobre esta parte em particular. Os *workflows* de produção de texturas evoluem rapidamente, acompanhando o desenvolvimento das ferramentas, e por isso o material de referência do projeto — em boa medida voltado aos fundamentos (PBR, *baking*, densidade de texels) e a uma técnica específica de produção (as *trim sheets*) — foi deliberadamente complementado pela documentação atualizada das ferramentas e dos motores, conforme autorizam as diretrizes editoriais da disciplina. As referências estão organizadas por tema, de modo a orientar o estudante sobre onde buscar aprofundamento conforme o assunto de interesse. Ao final, indica-se uma trilha de leitura sugerida.
+
+---
+
+## 1. Material de referência do projeto
+
+Conjunto de documentos técnicos que constituem a bibliografia base da disciplina e que sustentam, de modo direto, os temas da Parte IV.
+
+- OLSEN, Morten. *The Ultimate Trim — Texturing Techniques of Sunset Overdrive* (Insomniac Games; material de apoio da disciplina). Referência central do Capítulo 12. Apresenta, a partir da produção real de um jogo de grande porte, a técnica das *trim sheets* — a organização de acabamentos em faixas reutilizáveis — e a filosofia de reutilização extrema na texturização de ambientes modulares, articulando modelagem, desdobramento e textura. Base direta da seção sobre *trim sheets* e do estudo de caso da estação modular.
+- *What Is Texture Baking?* e *Baking Guide* (materiais de apoio da disciplina). Detalham o processo de *baking* e, em especial, a geração dos mapas derivados da geometria — curvatura, oclusão de ambiente, identificação de partes — que sustentam as máscaras automáticas do Capítulo 15 e a distribuição guiada pela geometria dos Capítulos 13 e 14. Leitura essencial para compreender de onde vêm as máscaras que tornam o desgaste e a sujeira fisicamente plausíveis.
+- *The PBR Guide* (Wes McDermott; Allegorithmic / Adobe), versão 2018 (material de apoio da disciplina). Fundamenta a exigência, transversal a toda a Parte IV, de que qualquer método de produção — tileable, procedural ou pintura — gere mapas calibrados e fisicamente corretos, com cor base livre de luz e valores dentro das faixas de referência. Apoio aos Capítulos 13 e 14 e descrição do fluxo de pintura de materiais.
+- *Blender Maps* e *Blender Normals* (materiais de apoio da disciplina). Situam os mapas de um material e o trabalho com normais dentro de um fluxo concreto, úteis para compreender por que todos os mapas de uma textura tileable precisam ser seamless em conjunto (Cap. 12) e como a pintura produz o conjunto coordenado de mapas (Cap. 14).
+- *AOD — Texel Density* (material de apoio da disciplina). Fundamenta a relação entre a densidade de texels e a economia da repetição que justifica as texturas tileables (Cap. 12) e a independência de resolução do procedural (Cap. 13).
+
+---
+
+## 2. Fontes complementares externas
+
+### 2.1 Documentação oficial de ferramentas e motores
+
+- *Adobe Substance 3D* — https://helpx.adobe.com/substance-3d.html. Referência da indústria para os Capítulos 13, 14 e 15. O Substance Designer concretiza a texturização procedural por grafos de nós e os materiais parametrizados (*smart materials*) do Capítulo 13; o Substance Painter concretiza a pintura 3D por camadas, a aplicação de materiais como pincéis, a geração de máscaras pela geometria (curvatura, oclusão, *ID*) e o uso de stencils dos Capítulos 14 e 15.
+- *Blender Manual* — https://docs.blender.org/. Seções sobre geração de texturas seamless e desdobramento para *trim sheets* (Cap. 12), o sistema de nós de textura e geradores procedurais (Cap. 13), o modo de pintura sobre o modelo (Cap. 14) e a pintura com stencils e máscaras e a geração de mapas pelo *baking* (Cap. 15). Permite praticar todos os conceitos da parte em uma ferramenta de código aberto.
+- *3DCoat Documentation* — https://3dcoat.com/documentation/. Recursos de pintura PBR diretamente sobre o modelo e de aplicação de material, úteis para comparar a abordagem de pintura entre softwares (Cap. 14).
+- *Unreal Engine Documentation* — https://dev.epicgames.com/documentation/unreal-engine/. Seções sobre repetição (*tiling*) de UVs e construção modular de ambientes (Cap. 12), materiais e mistura de materiais em terrenos (Caps. 13 e 15) e, sobretudo, os sistemas de *decal* — projeção, integração com a iluminação PBR e custo de renderização, inclusive em tempo de jogo (Cap. 15).
+- *Unity Manual* — https://docs.unity3d.com/. Seções correspondentes sobre repetição de texturas e materiais modulares, mistura de materiais em terrenos e o sistema de *decals*, para observar como o motor implementa as técnicas da parte.
+- *Godot Engine Documentation* — https://docs.godotengine.org/. Seções sobre materiais, *decals* e mistura de materiais em um motor de código aberto, para comparar implementações.
+
+### 2.2 Apresentações técnicas e recursos práticos da indústria
+
+- *Hotspot Texturing* (Default Interactive) — https://www.defaultinteractive.co.uk/post/hotspot-texturing. Discussão prática da técnica de *hotspotting* — o encaixe da geometria em um atlas de variantes —, de seu papel no combate à repetição visível e na aceleração da texturização de ambientes. Base direta da seção correspondente do Capítulo 12.
+
+### 2.3 Livros e recursos didáticos abertos
+
+- AKENINE-MÖLLER, Tomas; HAINES, Eric; HOFFMAN, Naty. *Real-Time Rendering*. 4. ed. Boca Raton: CRC Press, 2018. Referência central de gráficos em tempo real. Os capítulos sobre *texturing*, endereçamento e repetição de texturas (*wrapping*) fundamentam o Capítulo 12; os relativos a texturas procedurais e funções de ruído, o Capítulo 13; e os sobre *decaling*, mistura de texturas e composição de materiais, o Capítulo 15.
+- *The Book of Shaders* — https://thebookofshaders.com/?lan=pt. Introdução acessível e progressiva à geração procedural de padrões e ruídos a partir de funções matemáticas, útil para compreender por dentro os blocos construtivos (ruído, padrões, distorção) do Capítulo 13 e a natureza seamless por construção das texturas geradas.
+- PHARR, Matt; JAKOB, Wenzel; HUMPHREYS, Greg. *Physically Based Rendering: From Theory to Implementation*. 4. ed. Cambridge: MIT Press, 2023. Disponível em https://www.pbr-book.org/. Para quem quiser aprofundar a base teórica das texturas procedurais e do ruído tratados no Capítulo 13.
+
+---
+
+## 3. Trilha de leitura sugerida
+
+Para o estudante que deseja aprofundar a Parte IV de forma progressiva, sugere-se a seguinte ordem. Comece por esta apostila, para fixar o repertório de métodos e, sobretudo, a lógica que os une — o espectro entre o genérico reutilizável e o singular intencional, e a ideia da superfície como composição de camadas. Em seguida, para a produção de ambientes e a reutilização, estude a apresentação de Morten Olsen sobre *The Ultimate Trim*, que mostra, a partir de um jogo real, como as *trim sheets* organizam a economia de texturização de um mundo inteiro, e complemente-a com o artigo sobre *hotspot texturing*, que apresenta uma estratégia irmã de encaixe em atlas. Para a texturização procedural, recorra à documentação do Substance Designer e, para compreender os blocos construtivos por dentro, a *The Book of Shaders*; quem quiser fundamentar a teoria pode consultar os capítulos pertinentes de *Real-Time Rendering* e de *Physically Based Rendering*. Para a pintura digital e o fluxo híbrido, estude a documentação do Substance Painter e do 3D Coat, observando a pintura por camadas, a aplicação de materiais como pincéis e a geração de máscaras pela geometria — e confronte-a com os guias de *baking* do projeto, que explicam de onde vêm os mapas (curvatura, oclusão, *ID*) que guiam essas máscaras. Por fim, para máscaras, stencils e decais e para observar como cada motor concretiza esses instrumentos — incluindo os decais em tempo de jogo e seu custo —, consulte a documentação da Unreal, da Unity e da Godot, confrontando as diferentes implementações de uma mesma ideia. Em todo esse percurso, mantenha presente a calibração PBR do *The PBR Guide* e da Parte III, pois nenhum método de produção dispensa o rigor físico dos mapas.
+
+> Nota sobre o uso das fontes: conforme as diretrizes editoriais da disciplina, estas referências servem como base e ponto de partida para aprofundamento, não como fonte única. Por tratarem de *workflows* que evoluem rapidamente com as ferramentas, o estudante é especialmente encorajado a consultar sempre a documentação mais atual dos softwares e motores, a confrontar diferentes abordagens e a formar, a partir dessa comparação, uma compreensão própria e crítica dos métodos de produção de texturas — métodos que, articulados ao mapeamento da Parte II e aos fundamentos físicos da Parte III, completam o repertório prático do texturizador para jogos.
