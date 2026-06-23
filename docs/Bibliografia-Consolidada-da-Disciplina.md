@@ -11,9 +11,9 @@ Convém reafirmar, ao consolidar, o princípio que regeu o uso das fontes em tod
 Documentos técnicos que constituem a bibliografia base da disciplina, com indicação dos principais temas que sustentam.
 
 - *The PBR Guide* (Wes McDermott; Allegorithmic / Adobe), versão 2018. Fundamento do paradigma PBR (Parte III): a descrição física dos materiais, a distinção entre dados de cor (sRGB) e dados lineares, a calibração de cor base, rugosidade e metalicidade. Sustenta, em cadeia, a compressão e o *packing* (Parte V), a integração aos motores, o controle de qualidade e a iluminação de apresentação (Parte VI).
-- *What Is Texture Baking?* Introduz o conceito de *baking* como transferência de detalhe da malha rica para a leve e a economia de memória que o justifica (Parte V, Cap. 16).
-- *Baking Guide*. Aprofunda o processo do *baking* — projeção, *cage*, mapas gerados, cuidados contra falhas, nomenclatura, *exploded bake*, *padding* (Parte V, Caps. 16 e 17).
-- *Blender Normals*. Trata da natureza vetorial e das convenções (*tangent*/*object*, OpenGL/DirectX) dos mapas de normais (Partes V e VI, Caps. 17 e 22).
+- *What Is Texture Baking?* Introduz o conceito de *baking* como transferência de detalhe da malha rica para a leve e a economia de memória que o justifica (Parte V, Cap. 15).
+- *Baking Guide*. Aprofunda o processo do *baking* — projeção, *cage*, mapas gerados, cuidados contra falhas, nomenclatura, *exploded bake*, *padding* (Parte V, Caps. 15 e 16).
+- *Blender Normals*. Trata da natureza vetorial e das convenções (*tangent*/*object*, OpenGL/DirectX) dos mapas de normais (Partes V e VI, Caps. 16 e 22).
 - *Blender Maps*. Situa o conjunto de mapas de um material (normais, oclusão, curvatura, altura) e seu uso num fluxo concreto (Partes III, V e VI).
 - *AOD — Texel Density* (com os mapas de verificação *TD_Checker*). Fundamenta a relação entre densidade de texels, tamanho de textura e proximidade de visualização (Parte II, Cap. 6) e oferece um instrumento concreto de controle de qualidade (Parte VI, Cap. 23).
 - OLSEN, Morten. *The Ultimate Trim — Texturing Techniques of Sunset Overdrive* (Insomniac Games). Documenta a técnica das *trim sheets* e a filosofia de reutilização extrema (Partes IV e V, Caps. 12 e 18), retomada na arquitetura de materiais base e instâncias (Parte VI, Cap. 22).
@@ -32,7 +32,7 @@ Documentos técnicos que constituem a bibliografia base da disciplina, com indic
 - *Blender Manual* — https://docs.blender.org/manual/en/latest/index.html. Modelagem, desdobramento UV, *baking*, materiais por nós, iluminação, HDRI e renderização em ferramenta de código aberto, ao longo de toda a disciplina.
 - *Unreal Engine Documentation* — https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-8-documentation. Materiais por nós e instâncias, convenção DirectX de normais, *render pipelines*, compressão e mipmaps, UDIM e *texture arrays*, mobilidade de luz, *Lightmass* e Lumen, modos de depuração e renderização de apresentação. Referência prática das Partes V e VI.
 - *Unity Manual* — https://docs.unity3d.com/ (versões 6000.4 e 6000.5). Materiais e *Material Variants*, convenção OpenGL de normais, os diferentes *render pipelines*, compressão por plataforma, *Texture2DArray*, modos de iluminação (*Baked*/*Mixed*/*Realtime*) e *Light Probes*, e modos de depuração. Referência prática correspondente em outro motor.
-- *3DCoat Documentation* — https://3dcoat.com/documentation/. *Baking* e pintura PBR diretamente sobre o modelo, para comparar abordagens de geração de mapas (Parte V, Caps. 16 e 17).
+- *3DCoat Documentation* — https://3dcoat.com/documentation/. *Baking* e pintura PBR diretamente sobre o modelo, para comparar abordagens de geração de mapas (Parte V, Caps. 15 e 16).
 - *Godot Engine Documentation* — https://docs.godotengine.org/en/stable/. Materiais PBR (*StandardMaterial3D*), importação e compressão de texturas, *texture arrays*, iluminação e *lightmapping* em motor de código aberto, para confirmar que os princípios transcendem a ferramenta.
 
 ### 2.2 APIs gráficas e fundamentos de hardware

@@ -12,41 +12,41 @@ Este glossário reúne os termos técnicos empregados ao longo das seis partes d
 
 **Atlas (de textura)** — Reunião de várias imagens ou materiais distintos numa única textura, para reduzir o número de texturas e de *draw calls* (Cap. 18).
 
-**Baking** — Processo de transferir, por projeção, o detalhe de uma malha rica (*high-poly*) para mapas de textura aplicados sobre uma malha leve (*low-poly*); gera mapas de normais, oclusão, curvatura, *ID*, entre outros (Cap. 16). Por extensão, *baking* de iluminação é o pré-cálculo da luz armazenado em *lightmaps* (Cap. 21).
+**Baking** — Processo de transferir, por projeção, o detalhe de uma malha rica (*high-poly*) para mapas de textura aplicados sobre uma malha leve (*low-poly*); gera mapas de normais, oclusão, curvatura, *ID*, entre outros (Cap. 15). Por extensão, *baking* de iluminação é o pré-cálculo da luz armazenado em *lightmaps* (Cap. 21).
 
 **BC (Block Compression)** — Família de formatos de compressão de textura para GPU (também chamada DXT/DXTn) dominante em PC e consoles, com variantes especializadas por tipo de mapa, incluindo uma própria para normais (Cap. 20).
 
 **Bitmap** — Ver *Textura raster*.
 
-**Cage** — Malha auxiliar, ligeiramente maior que a *low-poly*, que define até onde a projeção do *baking* captura o detalhe da *high-poly*, evitando falhas de projeção (Cap. 16).
+**Cage** — Malha auxiliar, ligeiramente maior que a *low-poly*, que define até onde a projeção do *baking* captura o detalhe da *high-poly*, evitando falhas de projeção (Cap. 15).
 
 **Canal** — Cada componente de uma imagem (tipicamente vermelho, verde, azul e alfa — RGBA). Mapas de dados de valor único usam um só canal, o que permite o *packing de canais* (Cap. 20).
 
-**Cor base** *(base color/albedo)* — Mapa PBR que descreve a cor própria da superfície, sem informação de luz ou sombra; tratado como dado de cor (sRGB). Não deve conter iluminação "pintada" (Caps. 9 e 23).
+**Cor base** *(base color/albedo)* — Mapa PBR que descreve a cor própria da superfície, sem informação de luz ou sombra; tratado como textura de **cor** (interpretada em sRGB), e não como dado linear. Não deve conter iluminação "pintada" (Caps. 9 e 23).
 
 **Cor versus dados** — Distinção fundamental entre uma textura interpretada pelo olho (cor, em espaço sRGB) e uma interpretada por um cálculo (dado, em espaço linear); governa a produção, a marcação na importação, a compressão e o *packing* de cada textura (Caps. 8, 20 e 22).
 
-**Curvatura (mapa de)** — Mapa assado que registra as arestas convexas e côncavas da superfície; usado como máscara para desgaste e sujeira (Caps. 16 e 15).
+**Curvatura (mapa de)** — Mapa assado que registra as arestas convexas e côncavas da superfície; usado como máscara para desgaste e sujeira (Caps. 15 e 17).
 
-**Decal** — Detalhe de superfície aplicado localmente sobre um material de base, como um adesivo (sinais, rachaduras, manchas), sem ocupar espaço no mapeamento principal (Cap. 15).
+**Decal** — Detalhe de superfície aplicado localmente sobre um material de base, como um adesivo (sinais, rachaduras, manchas), sem ocupar espaço no mapeamento principal (Cap. 17).
 
 **Densidade de texels (texel density)** — Quantidade de texels (pixels de textura) por unidade de superfície do modelo; mede a resolução efetiva da textura sobre o objeto e deve ser consistente e adequada à proximidade de visualização (Cap. 6).
 
-**Detail normal** — Mapa de normais de detalhe fino, repetido sobre a superfície e somado ao mapa de normais principal para acrescentar microrrelevo (poros, fibras) sem custo de resolução (Cap. 17).
+**Detail normal** — Mapa de normais de detalhe fino, repetido sobre a superfície e somado ao mapa de normais principal para acrescentar microrrelevo (poros, fibras) sem custo de resolução (Cap. 16).
 
 **Draw call** — Instrução de desenho enviada à GPU; cada mudança de material ou textura tende a gerar uma, e seu número é um recurso escasso a economizar (atlas, *trim sheets*, *batching*) (Cap. 18).
 
 **DXT / DXTn** — Ver *BC*.
 
-**Exploded bake** — Técnica de *baking* em que partes próximas do modelo são afastadas umas das outras para evitar que o detalhe de uma vaze sobre a outra na projeção (Cap. 16).
+**Exploded bake** — Técnica de *baking* em que partes próximas do modelo são afastadas umas das outras para evitar que o detalhe de uma vaze sobre a outra na projeção (Cap. 15).
 
 **Global illumination (iluminação global)** — Simulação da luz indireta, que ricocheteia entre superfícies tingindo-se de suas cores; cara em tempo real, é frequentemente pré-calculada em *lightmaps* (Cap. 21).
 
 **Hotspot (texturing)** — Técnica de mapear faces a regiões pré-definidas de uma textura de *trim* compartilhada, encaixando cada superfície na faixa adequada (Caps. 12 e 18).
 
-**High-poly** — Malha de alta contagem de polígonos, rica em detalhe esculpido, usada como origem do *baking* (Cap. 16).
+**High-poly** — Malha de alta contagem de polígonos, rica em detalhe esculpido, usada como origem do *baking* (Cap. 15).
 
-**ID (mapa de)** — Mapa que atribui cores distintas a diferentes partes ou materiais do modelo, servindo de máscara para aplicar materiais por região (Caps. 16 e 15).
+**ID (mapa de)** — Mapa que atribui cores distintas a diferentes partes ou materiais do modelo, servindo de máscara para aplicar materiais por região (Caps. 15 e 17).
 
 **Instância (de material)** — Variante de um material base que reaproveita sua lógica de *shader* alterando apenas parâmetros expostos (cor, rugosidade), economizando trabalho e custo de renderização (Cap. 22).
 
@@ -54,25 +54,27 @@ Este glossário reúne os termos técnicos empregados ao longo das seis partes d
 
 **Linear (espaço)** — Espaço de cor sem a curva de correção perceptual; usado para texturas de dados (normais, rugosidade, metalicidade, oclusão, mapas empacotados), cujos valores alimentam cálculos (Caps. 8, 20 e 22).
 
-**Low-poly** — Malha de baixa contagem de polígonos que vai ao jogo, recebendo, via *baking*, o detalhe da *high-poly* em seus mapas (Cap. 16).
+**Low-poly** — Malha de baixa contagem de polígonos que vai ao jogo, recebendo, via *baking*, o detalhe da *high-poly* em seus mapas (Cap. 15).
 
-**Máscara** — Imagem em escala de cinza que controla onde um efeito, material ou detalhe se aplica sobre a superfície; base do fluxo procedural e em camadas (Cap. 15).
+**Máscara** — Imagem em escala de cinza que controla onde um efeito, material ou detalhe se aplica sobre a superfície; base do fluxo procedural e em camadas (Cap. 17).
 
 **Material** — Descrição completa da aparência de uma superfície, reunindo os mapas e os parâmetros que o *shader* interpreta; no motor, objeto editável que liga texturas às entradas do *shader* (Caps. 1, 11 e 22).
 
-**Metalicidade (metallic)** — Mapa PBR que classifica a superfície entre metal e não metal, idealmente em valores próximos de 0 ou 1; determina como a luz é refletida (Cap. 9).
+**Metalicidade (metallic)** — Também chamado, ao longo da apostila, de **mapa metálico** ou simplesmente **metálico** (os termos são equivalentes). Mapa PBR que classifica a superfície entre metal e não metal, idealmente em valores próximos de 0 ou 1; determina como a luz é refletida (Cap. 9).
+
+**Metálico (mapa)** — Ver *Metalicidade*.
 
 **Mipmap** — Cadeia de versões progressivamente menores de uma textura, pré-calculadas e escolhidas pelo hardware conforme a distância, para leitura barata e sem *aliasing* a distância, ao custo de cerca de um terço de memória extra (Cap. 20).
 
-**Normais (mapa de)** — Mapa de dados que codifica, em cor, a direção da superfície em cada ponto, simulando relevo sob a iluminação sem geometria adicional; sensível à convenção (OpenGL/DirectX) e ao espaço de cor (Caps. 9, 17 e 22).
+**Normais (mapa de)** — Mapa de dados que codifica, em cor, a direção da superfície em cada ponto, simulando relevo sob a iluminação sem geometria adicional; sensível à convenção (OpenGL/DirectX) e ao espaço de cor (Caps. 9, 16 e 22).
 
-**Oclusão de ambiente (ambient occlusion)** — Mapa que registra o quanto cada ponto da superfície é encoberto da luz ambiente pela própria geometria, escurecendo reentrâncias; usado na composição e como máscara (Caps. 9 e 16).
+**Oclusão de ambiente (ambient occlusion)** — Mapa que registra o quanto cada ponto da superfície é encoberto da luz ambiente pela própria geometria, escurecendo reentrâncias; usado na composição e como máscara (Caps. 9 e 15).
 
 **ORM / RMA** — Mapa empacotado que reúne oclusão, rugosidade e metalicidade em canais distintos de uma única textura (a sigla indica a ordem dos canais); convenção comum de *packing* esperada por muitos motores, tratada como dado linear (Cap. 20).
 
 **Packing de canais** — Técnica de armazenar mapas de dados de valor único em canais distintos (RGBA) de uma só textura, reduzindo memória e número de texturas (Cap. 20).
 
-**Padding** — Margem de pixels expandida para fora das ilhas de UV no *baking* e nas texturas, para que a filtragem e os *mipmaps* não puxem o vazio ou imagens vizinhas para dentro da superfície (Caps. 16 e 18).
+**Padding** — Margem de pixels expandida para fora das ilhas de UV no *baking* e nas texturas, para que a filtragem e os *mipmaps* não puxem o vazio ou imagens vizinhas para dentro da superfície (Caps. 15 e 18).
 
 **PBR (Physically Based Rendering)** — Paradigma de renderização que descreve os materiais por propriedades físicas (cor base, rugosidade, metalicidade) calibradas segundo o comportamento real da luz, garantindo aparência plausível sob qualquer iluminação (Cap. 8).
 
@@ -80,7 +82,7 @@ Este glossário reúne os termos técnicos empregados ao longo das seis partes d
 
 **Procedural (texturização)** — Geração de texturas e materiais por regras, ruídos e operações combinadas, em vez de pintura manual direta, resultando em conteúdo não destrutivo e ajustável (Cap. 13).
 
-**Retopologia** — Reconstrução de uma malha limpa e leve (*low-poly*) a partir de uma escultura densa (*high-poly*), preparando-a para o desdobramento e o *baking* (Caps. 7 e 16).
+**Retopologia** — Reconstrução de uma malha limpa e leve (*low-poly*) a partir de uma escultura densa (*high-poly*), preparando-a para o desdobramento e o *baking* (Caps. 7 e 15).
 
 **Rugosidade (roughness)** — Mapa PBR que descreve quanto a superfície dispersa a luz refletida, do espelhado (liso) ao fosco (rugoso); um dos mapas mais determinantes da aparência de um material (Cap. 9).
 
@@ -90,13 +92,13 @@ Este glossário reúne os termos técnicos empregados ao longo das seis partes d
 
 **sRGB** — Espaço de cor com curva de correção ajustada à percepção humana; usado para texturas de cor (como a cor base), nunca para texturas de dados (Caps. 8 e 20).
 
-**Stencil** — Máscara ou padrão usado para aplicar um detalhe sobre a superfície de forma controlada, como um estêncil físico (Cap. 15).
+**Stencil** — Máscara ou padrão usado para aplicar um detalhe sobre a superfície de forma controlada, como um estêncil físico (Cap. 17).
 
 **Texel** — Pixel de uma textura ("texture element"); a unidade da densidade de texels (Cap. 6).
 
 **Textura** — Imagem aplicada sobre uma superfície 3D para fornecer informação visual ou de dados ao material (Cap. 1).
 
-**Texture array** — Estrutura que reúne múltiplas texturas de mesmo tamanho num único objeto indexável, usada para multiplicar a densidade de detalhe (por exemplo, em terrenos) (Cap. 19).
+**Texture array** — Estrutura que reúne múltiplas texturas de mesmo tamanho e formato, empilhadas num único objeto acessado por índice através de uma única ligação (*binding*); usada para misturar muitos materiais (por exemplo, em terrenos) ou dar variação a objetos repetidos sem custo de troca de textura. Não se confunde com o UDIM/multi-tile, cujo objetivo é multiplicar a densidade de texels (Cap. 19).
 
 **Trim sheet** — Textura organizada em faixas de molduras, bordas e materiais reutilizáveis, mapeadas sobre muitas superfícies diferentes para máxima reutilização (Caps. 12 e 18).
 

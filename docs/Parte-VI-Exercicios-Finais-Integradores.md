@@ -34,7 +34,7 @@ Numa revisão técnica final, um único *asset* — uma porta de masmorra em mad
 
 Escolha um *asset* de altíssima qualidade — por exemplo, uma armadura ornamentada de um personagem protagonista — e descreva, em análise comparativa, como ele seria produzido e tratado em dois contextos: um filme de animação (sem restrição de tempo real) e um jogo (com orçamento de desempenho).
 
-Percorra deliberadamente as etapas do *pipeline* (Cap. 25) e mostre, em cada uma, o que muda entre os dois contextos: a contagem de polígonos e o papel do *baking* (Cap. 16); a densidade de texels e o número de texturas, incluindo o uso e a eventual consolidação de UDIMs (Caps. 6 e 19); a estrutura de materiais e o uso de instâncias (Cap. 22); a compressão, os mipmaps e o *packing* (Cap. 20); e a iluminação — global em tempo real ou pré-calculada em lightmaps (Cap. 21). Conclua explicando por que tantas técnicas da disciplina são, em essência, **respostas à restrição do tempo real** que o cinema não enfrenta — e por que, ainda assim, o profissional de jogos precisa entender o fluxo de cinema.
+Percorra deliberadamente as etapas do *pipeline* (Cap. 25) e mostre, em cada uma, o que muda entre os dois contextos: a contagem de polígonos e o papel do *baking* (Cap. 15); a densidade de texels e o número de texturas, incluindo o uso e a eventual consolidação de UDIMs (Caps. 6 e 19); a estrutura de materiais e o uso de instâncias (Cap. 22); a compressão, os mipmaps e o *packing* (Cap. 20); e a iluminação — global em tempo real ou pré-calculada em lightmaps (Cap. 21). Conclua explicando por que tantas técnicas da disciplina são, em essência, **respostas à restrição do tempo real** que o cinema não enfrenta — e por que, ainda assim, o profissional de jogos precisa entender o fluxo de cinema.
 
 ---
 
@@ -56,7 +56,7 @@ Para cada um, descreva quais etapas do *pipeline* canônico se aplicam e quais s
 
 A distinção entre uma textura de **cor** (interpretada pelo olho, em sRGB) e uma de **dados** (interpretada por um cálculo, em linear) reapareceu da Parte III à Parte VI como uma das ideias mais consequentes da disciplina. Escreva uma análise que rastreie essa distinção ao longo do *pipeline*, identificando ao menos quatro momentos distintos em que ela determina uma decisão concreta — por exemplo, na produção do mapa, na sua compressão, na sua marcação de espaço de cor na importação, no seu *packing* e na verificação do controle de qualidade.
 
-Para cada momento, explique o que muda conforme a textura seja de cor ou de dado e qual o erro que resulta de tratar uma como a outra. Detenha-se no mapa de normais como o caso mais sensível (Caps. 17 e 22), listando todos os tratamentos de "imagem comum" que o corromperiam. Conclua explicando por que vários desses erros são chamados de **silenciosos**, por que isso os torna especialmente perigosos e como o controle de qualidade (Cap. 23) os torna audíveis.
+Para cada momento, explique o que muda conforme a textura seja de cor ou de dado e qual o erro que resulta de tratar uma como a outra. Detenha-se no mapa de normais como o caso mais sensível (Caps. 16 e 22), listando todos os tratamentos de "imagem comum" que o corromperiam. Conclua explicando por que vários desses erros são chamados de **silenciosos**, por que isso os torna especialmente perigosos e como o controle de qualidade (Cap. 23) os torna audíveis.
 
 ---
 
