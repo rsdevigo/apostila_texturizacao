@@ -14,6 +14,44 @@ Antes das técnicas, é preciso dimensionar o problema. Uma textura é uma grade
 
 É esse o pano de fundo das três técnicas do capítulo. A **compressão** ataca o problema diretamente, reduzindo quanto cada textura ocupa — tipicamente a um quarto ou menos do tamanho original. Os **mipmaps**, embora acrescentem memória, resolvem um problema correlato de qualidade e desempenho na leitura a distância, e sem eles as texturas distantes ficariam ruidosas e custosas. O **packing de canais** reduz o **número** de texturas, combinando informações que caberiam em mapas separados num só, economizando tanto memória quanto ligações (e, portanto, *draw calls*). Juntas, as três formam o arsenal de adequação da textura ao *hardware*, e operam sobre a mesma escassez que torna todo este conhecimento necessário.
 
+### Escolha de resolução: o tamanho certo para cada *asset*
+
+Antes de comprimir, empacotar ou gerar mipmaps, existe uma decisão que precede todas as demais e que, quando errada, nenhuma técnica posterior corrige completamente: **qual a resolução da textura?** Uma textura desnecessariamente grande desperdiça memória e tempo de carregamento; uma textura desnecessariamente pequena degrada a qualidade visual mesmo com compressão ótima. A escolha de resolução é, portanto, a decisão de orçamento mais direta que um texturizador toma.
+
+> 📘 **Definição**
+> A **resolução de textura** é o número de texels em cada dimensão da imagem (por exemplo, 1024×1024 ou 2048×2048). Ela determina diretamente o custo de memória e a qualidade de detalhe, e deve ser proporcional à **densidade de texels necessária** — que depende do tamanho físico do objeto e da sua distância de visualização no jogo.
+
+A resolução correta não é a maior disponível nem um padrão único para todos os *assets*: é aquela que fornece a densidade de texels adequada ao papel visual do objeto. O Capítulo 6 introduziu o conceito de texel density — a relação entre o tamanho físico de uma superfície e quantos texels a cobrem. A resolução de textura é uma das três variáveis dessa equação (junto ao tamanho físico do objeto e ao tamanho das ilhas UV), e escolhê-la com critério exige entender onde e como o objeto aparece no jogo.
+
+Dois princípios orientam a decisão. O primeiro é o de **proximidade de visualização**: um personagem protagonista visto constantemente a menos de dois metros em close cinematográfico justifica texturas de 4096×4096 (ou múltiplos tiles UDIM) para que cada poro da pele seja legível; um bloco de pavimentação de um piso de fundo, visto a dez metros, pode ser adequadamente coberto por uma tileable de 1024×1024 que se repete em toda a superfície. O segundo é o de **potência de dois** (*power of two*): texturas devem ter dimensões em potências de dois — 256, 512, 1024, 2048, 4096 — para que o hardware gere corretamente a cadeia de mipmaps e para que os algoritmos de compressão em blocos (BC, ASTC) operem sem desperdício ou artefatos nas bordas. Texturas com dimensões arbitrárias (723×483, por exemplo) frequentemente causam expansão interna para a próxima potência de dois e consumo de memória maior do que o esperado.
+
+A tabela a seguir sistematiza as faixas de resolução por categoria de *asset*, segundo a prática consolidada da indústria. Os valores assumem a visualização padrão de jogos de terceira pessoa ou FPS; projetos com câmera fixa muito próxima (aventura gráfica, VR) podem justificar uma resolução acima, e jogos móveis ou de câmera muito afastada (estratégia em tempo real) frequentemente ficam uma faixa abaixo.
+
+| Categoria de *asset* | Resolução típica | Observações |
+|---|---|---|
+| Personagem protagonista — corpo | 2048×2048 | Frequentemente múltiplos texture sets (cabeça, corpo, acessórios) |
+| Personagem protagonista — rosto | 2048×2048 a 4096×4096 | SSS, detalhe de pele, olhos em texture set separado |
+| NPC com cenas próximas | 2048×2048 | Reduzir para 1024 se distância de visualização for moderada |
+| NPC de fundo / multidão | 512×512 a 1024×1024 | Atlas com variação de cores pode servir vários NPCs semelhantes |
+| Arma de personagem (jogável) | 2048×2048 | Vista constantemente em primeiro plano; detalhe de metal e desgaste relevante |
+| Prop de ambiente — primário | 1024×1024 a 2048×2048 | Caixas, barris, móveis com interação; depende da cena |
+| Prop de ambiente — secundário | 512×512 a 1024×1024 | Objetos decorativos, sem interação próxima |
+| Prop de ambiente — fundo / LOD 2+ | 256×256 a 512×512 | Frequentemente em atlas compartilhado; distância grande |
+| Superfície arquitetônica (muro, piso) | Tileable 1024×1024 ou 2048×2048 | Repetida via UV; resolução serve a uma área virtuamente ilimitada |
+| Trim sheet / texture atlas de ambiente | 2048×2048 a 4096×4096 | Resolução se divide entre todas as faixas ou imagens no atlas |
+| Terreno (textura base) | 2048×2048 a 4096×4096 por tile | Combinado com texture array e blending; texel density calibrado por bioma |
+| Skybox / cubemap de céu | 2048×2048 por face | Mínimo para evitar pixelização visível no horizonte |
+| Interface (HUD, menus) | Livre (mas potência de dois) | **Sem mipmap**; resolução depende da resolução-alvo da tela |
+| Ícones de inventário / interface | 256×256 a 512×512 | Atlas de ícones; sem mipmap; sRGB |
+| Lightmap de ambiente estático | 512×512 a 2048×2048 | Resolução proporcional ao tamanho da geometria e à proximidade |
+
+> 💡 **Dica Profissional**
+> A resolução de uma textura determina a metade do orçamento de memória que não se recupera por compressão — comprimir uma textura de 4096×4096 ocupa quatro vezes mais memória que comprimir uma de 2048×2048, independentemente do formato. Escolher a resolução certa desde o início é a decisão de orçamento de textura mais econômica de tomar.
+
+A relação entre resolução e texel density é bidirecional. Se os UVs de um objeto ocupam pouco do espaço UV (ilhas pequenas, muito espaço desperdiçado), aumentar a resolução da textura não melhora proporcionalmente o resultado — a texel density efetiva permanece baixa porque as ilhas cobrem pouca área. A solução nesses casos é primeiro ajustar o layout UV (Capítulo 6) para que as ilhas ocupem melhor o espaço disponível; só então escolher a resolução. A resolução certa pressupõe UVs eficientes.
+
+Por fim, resolução e número de texture sets são decisões complementares. Quando a geometria de um personagem é muito complexa para caber com densidade adequada num único texture set de 2048×2048 — uma armadura com muitas partes distintas, por exemplo — a solução não é necessariamente subir para 4096, mas considerar dividir o personagem em múltiplos texture sets (corpo, armadura, rosto, acessórios), mantendo cada um em 2048 com boa densidade. Essa divisão pode ser mais econômica em memória do que um 4096 único, dependendo de quantas partes se pode reutilizar ou agrupar em atlas.
+
 ### Compressão de textura: GPU não é JPEG
 
 > 📘 **Definição**
@@ -121,7 +159,7 @@ Há o erro de **não comprimir** as texturas, ou comprimi-las apenas como arquiv
 
 ## Resumo
 
-Este capítulo final da Parte V tratou de como a textura, depois de gerada e organizada, é efetivamente armazenada na memória da placa de vídeo e lida na renderização, apresentando os três mecanismos que governam seu custo real. Dimensionamos o problema: a memória de vídeo é escassa, e texturas mal geridas estouram-na, fazendo o jogo travar e borrar. Apresentamos a **compressão de textura para GPU** — distinta da compressão de arquivo comum por manter a textura comprimida na memória e descomprimi-la em blocos no momento da leitura —, com suas famílias (BC/DXT em PC e console, ASTC em celular) e seu caráter com perda, e estabelecemos a regra que governa tudo: tratar **cor como cor** (sRGB, compressão de cor) e **dados como dados** (linear, formatos apropriados, mapa de normais em formato especializado), sob pena do erro silencioso que deturpa materiais. Apresentamos os **mipmaps** — a cadeia de versões progressivamente menores da textura, escolhidas pelo hardware conforme a distância — como solução para a cintilação (*aliasing*) e o custo da leitura distante, ao preço de cerca de um terço de memória extra, conectando-os ao *padding* e à margem do atlas que evitam costuras. E apresentamos o **packing de canais** — guardar mapas de canal único em canais distintos de uma só textura, na convenção *ORM* e afins — como forma de reduzir memória e número de texturas (e *draw calls*) de uma vez, sempre tratado como dado linear.
+Este capítulo final da Parte V tratou de como a textura, depois de gerada e organizada, é efetivamente armazenada na memória da placa de vídeo e lida na renderização. Dimensionamos o problema da memória escassa e estabelecemos o ponto de partida da eficiência: a **escolha de resolução** — a decisão de potência de dois que determina o orçamento base de cada textura, orientada pela proximidade de visualização e pela tabela de categorias de *asset*. Apresentamos a **compressão de textura para GPU** — distinta da compressão de arquivo comum por manter a textura comprimida na memória e descomprimi-la em blocos no momento da leitura —, com suas famílias (BC/DXT em PC e console, ASTC em celular) e seu caráter com perda, e estabelecemos a regra que governa tudo: tratar **cor como cor** (sRGB, compressão de cor) e **dados como dados** (linear, formatos apropriados, mapa de normais em formato especializado), sob pena do erro silencioso que deturpa materiais. Apresentamos os **mipmaps** — a cadeia de versões progressivamente menores da textura, escolhidas pelo hardware conforme a distância — como solução para a cintilação (*aliasing*) e o custo da leitura distante, ao preço de cerca de um terço de memória extra, conectando-os ao *padding* e à margem do atlas que evitam costuras. E apresentamos o **packing de canais** — guardar mapas de canal único em canais distintos de uma só textura, na convenção *ORM* e afins — como forma de reduzir memória e número de texturas (e *draw calls*) de uma vez, sempre tratado como dado linear.
 
 ## Exercícios
 
@@ -138,6 +176,10 @@ Este capítulo final da Parte V tratou de como a textura, depois de gerada e org
 ## Glossário
 
 **ASTC:** Formato de compressão de textura para GPU predominante em dispositivos móveis, flexível em taxa de compressão e qualidade, que mantém a textura comprimida na memória de vídeo.
+
+**Potência de dois (*power of two*):** Convenção de dimensionamento de texturas segundo a qual largura e altura devem ser potências de dois (256, 512, 1024, 2048, 4096). Garante a geração correta da cadeia de mipmaps e o funcionamento sem desperdício dos algoritmos de compressão em blocos.
+
+**Resolução de textura:** Número de texels em cada dimensão de uma imagem de textura (ex.: 2048×2048). Determina diretamente o custo de memória e deve ser proporcional à densidade de texels necessária conforme a categoria de *asset* e a sua distância de visualização.
 
 **BC (Block Compression / DXT):** Família de formatos de compressão de textura para GPU amplamente usados em PC e consoles, com variantes especializadas para cor, mapas de normais e dados de canal único.
 
