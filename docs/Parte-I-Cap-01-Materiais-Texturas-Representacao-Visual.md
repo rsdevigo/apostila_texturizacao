@@ -61,6 +61,8 @@ Vale consolidar a relação entre os três termos em uma cadeia. A **geometria**
 
 > **Figura 1.1** — Diagrama da cadeia conceitual mostrando, da esquerda para a direita, quatro blocos conectados por setas — "Geometria (malha de triângulos)", "Coordenadas UV (mapeamento)", "Texturas (canais 2D)" e "Material (regras de iluminação)" — convergindo para um quadro final rotulado "Imagem renderizada na tela".
 
+![](imagens/cap01_fig01.png)
+
 **Screenshot sugerido:** Captura de um software 3D (por exemplo, Blender) mostrando, lado a lado, o mesmo objeto: à esquerda apenas a malha em wireframe; ao centro o objeto com material uniforme; à direita o objeto com texturas aplicadas. Anotar cada estágio com seu nome.
 
 ## Aplicação em Jogos
